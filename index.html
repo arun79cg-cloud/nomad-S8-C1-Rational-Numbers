@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nomad Tutor – Class 8 Rational Numbers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="brand-mark">
+        <div class="leaf-logo"></div>
+        <div class="brand-text">
+          <span class="brand-name">Nomad Tutor</span>
+          <span class="brand-sub">Class 8 · Rational Numbers</span>
+        </div>
+      </div>
+      <button class="parent-mode-btn" data-screen-target="parent-report">
+        Parent
+      </button>
+    </header>
+
+    <!-- Main content container (same width as top bar) -->
+    <main class="app-main">
+      <!-- Progress strip -->
+      <div class="progress-strip">
+        <div class="progress-label">Progress</div>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" id="overallProgress"></div>
+        </div>
+        <div class="progress-percent" id="overallProgressLabel">0%</div>
+      </div>
+
+      <!-- NAV TABS (chapters steps) -->
+      <nav class="step-tabs">
+        <button class="step-tab active" data-screen-target="landing">Intro</button>
+        <button class="step-tab" data-screen-target="preview">Free preview</button>
+        <button class="step-tab" data-screen-target="paywall">Unlock full</button>
+        <button class="step-tab" data-screen-target="teach-full">Teach steps</button>
+        <button class="step-tab" data-screen-target="practice">Practice ladder</button>
+        <button class="step-tab" data-screen-target="tests">Tests</button>
+        <button class="step-tab" data-screen-target="adaptive">Adaptive revision</button>
+        <button class="step-tab" data-screen-target="parent-report">Parent report</button>
+        <button class="step-tab" data-screen-target="promo">More from Nomad</button>
+      </nav>
+
+      <!-- SCREENS WRAPPER -->
+      <section class="screens">
+
+        <!-- Landing screen -->
+        <section class="screen active" id="landing">
+          <div class="card hero-card">
+            <h1>Rational Numbers</h1>
+            <p class="muted">
+              Follow each step like a teacher on the board. Short explanations, quick checks, and tests built for Class 8.
+            </p>
+
+            <ul class="hero-list">
+              <li>9 clear **Teach** steps</li>
+              <li>Practice ladder from easy to exam level</li>
+              <li>3 mini tests + adaptive revision</li>
+              <li>Parent-friendly progress report</li>
+            </ul>
+
+            <div class="hero-cta-row">
+              <button class="btn btn-primary" data-screen-target="preview">
+                Start free preview ✨
+              </button>
+              <button class="btn btn-ghost" data-screen-target="paywall">
+                See full chapter
+              </button>
+            </div>
+
+            <div class="note-strip">
+              First 50 buyers get the full chapter at launch price ₹49.
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>How this chapter works</h2>
+            <ol class="simple-list">
+              <li>Learn with 9 short Teach steps.</li>
+              <li>Climb the practice ladder from easy to exam-style questions.</li>
+              <li>Take 3 timed tests and see your score instantly.</li>
+              <li>App builds a revision set from your mistakes.</li>
+              <li>Parent gets a simple progress report on one screen.</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Free preview screen -->
+        <section class="screen" id="preview">
+          <div class="card">
+            <h2>Free preview</h2>
+            <p class="muted">
+              Try the first two Teach steps and a couple of easy questions before you decide.
+            </p>
+          </div>
+
+          <!-- Teach step 1 -->
+          <div class="card teach-card" data-teach-step="1">
+            <div class="chip">Teach · Step 1 of 9</div>
+            <h3>Why do we need rational numbers?</h3>
+            <p>
+              We know <strong>natural numbers</strong> (1,2,3,…) and <strong>whole numbers</strong> (0,1,2,…). But some equations like <strong>x + 18 = 5</strong> need x = −13, which is not a whole number.
+            </p>
+            <p>
+              Even integers fall short. To solve <strong>2x = 3</strong>, we need x = 3/2, which is not an integer. So we extend to <strong>rational numbers</strong>.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>Natural → Whole → Integer → Rational</p>
+              <p>Each new set lets us solve more equations.</p>
+            </div>
+          </div>
+
+          <!-- Teach step 2 -->
+          <div class="card teach-card" data-teach-step="2">
+            <div class="chip">Teach · Step 2 of 9</div>
+            <h3>What is a rational number?</h3>
+            <p>
+              A rational number is any number that can be written as <strong>p/q</strong>, where p and q are integers and q ≠ 0.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>3/5, −7/2, 4 (= 4/1) are rational numbers.</p>
+              <p>√2 is <em>not</em> rational because it cannot be written as p/q with integers p and q.</p>
+            </div>
+          </div>
+
+          <!-- Preview questions -->
+          <div class="card">
+            <h3>Quick check (free preview)</h3>
+            <p class="muted">Answer these two easy questions.</p>
+
+            <div class="question-block" data-preview-question="1">
+              <p><strong>Q1.</strong> Which of these is a rational number?</p>
+              <div class="options">
+                <button class="option-btn" data-correct="false">√3</button>
+                <button class="option-btn" data-correct="true">−5/4</button>
+                <button class="option-btn" data-correct="false">π</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="question-block" data-preview-question="2">
+              <p><strong>Q2.</strong> Write 7 as a rational number.</p>
+              <input type="text" class="text-input" placeholder="Your answer, e.g. 7/1" />
+              <button class="btn btn-small" data-action="check-preview-q2">Check</button>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="preview-footer">
+              <button class="btn btn-primary" data-screen-target="paywall">
+                Unlock full chapter to continue 🔓
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Paywall screen -->
+        <section class="screen" id="paywall">
+          <div class="card">
+            <h2>Unlock the full chapter</h2>
+            <p class="muted">
+              Get all 9 Teach steps, the full practice ladder, 3 tests, adaptive revision, and parent report for this chapter.
+            </p>
+
+            <ul class="feature-list">
+              <li>Full concept coverage for NCERT Class 8 Chapter 1.</li>
+              <li>Step-by-step board-style explanations.</li>
+              <li>30+ practice questions from easy to exam level.</li>
+              <li>3 tests with instant scores and revision set.</li>
+              <li>Simple progress view for parents.</li>
+            </ul>
+
+            <div class="price-row">
+              <div>
+                <div class="launch-price">
+                  Launch price: <span class="price-tag">₹49</span>
+                  <span class="tag-pill">First 50 buyers</span>
+                </div>
+                <div class="muted small">
+                  Standard price ₹99 after first 50 buyers.
+                </div>
+              </div>
+            </div>
+
+            <div class="pay-cta">
+              <!-- Visible Pay CTA – link to be added later -->
+              <button class="btn btn-primary" id="payNowBtn">
+                Pay & unlock full chapter 💳
+              </button>
+              <p class="muted small">
+                After payment, the chapter unlocks instantly inside this app.
+              </p>
+            </div>
+
+            <div class="note-strip">
+              For now, tap “Mark as paid (demo)” below to test the full flow while we set up the real payment link.
+            </div>
+
+            <button class="btn btn-secondary" id="demoUnlockBtn">
+              Mark as paid (demo) and unlock full content
+            </button>
+          </div>
+        </section>
+
+        <!-- Teach full, Practice, Tests, Adaptive, Parent, Promo
+             will continue in HTML Chunk 2 & 3 -->
+        <!-- Full Teach steps screen -->
+        <section class="screen" id="teach-full">
+          <div class="card">
+            <h2>Teach steps 1–9</h2>
+            <p class="muted">
+              Go step by step. Read the board, then try the quick check under each step.
+            </p>
+          </div>
+
+          <!-- Step 1 (same as preview, marked completed if preview done) -->
+          <div class="card teach-card" data-teach-step="1">
+            <div class="chip">Teach · Step 1 of 9</div>
+            <h3>Why do we need rational numbers?</h3>
+            <p>
+              We know <strong>natural numbers</strong> (1,2,3,…) and <strong>whole numbers</strong> (0,1,2,…). But some equations like <strong>x + 18 = 5</strong> need x = −13, which is not a whole number.
+            </p>
+            <p>
+              Even integers fall short. To solve <strong>2x = 3</strong>, we need x = 3/2, which is not an integer. So we extend to <strong>rational numbers</strong>.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>Natural → Whole → Integer → Rational</p>
+              <p>Each new set lets us solve more equations.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="card teach-card" data-teach-step="2">
+            <div class="chip">Teach · Step 2 of 9</div>
+            <h3>Definition of rational number</h3>
+            <p>
+              A rational number is any number that can be written as <strong>p/q</strong>, where p and q are integers and q ≠ 0.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>Every integer is rational: 5 = 5/1, −3 = −3/1.</p>
+              <p>Fractions like 2/7, −11/4 are also rational numbers.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="card teach-card" data-teach-step="3">
+            <div class="chip">Teach · Step 3 of 9</div>
+            <h3>Closure property</h3>
+            <p>
+              A set is <strong>closed</strong> under an operation if we never leave the set when we do that operation.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>For rational numbers:</p>
+              <p>p/q + r/s is rational.</p>
+              <p>p/q − r/s is rational.</p>
+              <p>(p/q) × (r/s) is rational.</p>
+              <p>(p/q) ÷ (r/s) is rational, if r/s ≠ 0.</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="card teach-card" data-teach-step="4">
+            <div class="chip">Teach · Step 4 of 9</div>
+            <h3>Commutativity</h3>
+            <p>
+              For rational numbers, addition and multiplication are <strong>commutative</strong>.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>a/b + c/d = c/d + a/b</p>
+              <p>a/b × c/d = c/d × a/b</p>
+              <p>Subtraction and division are not commutative.</p>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="card teach-card" data-teach-step="5">
+            <div class="chip">Teach · Step 5 of 9</div>
+            <h3>Associativity</h3>
+            <p>
+              When three rational numbers are added or multiplied, the way we group them does not change the result.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>(a/b + c/d) + e/f = a/b + (c/d + e/f)</p>
+              <p>(a/b × c/d) × e/f = a/b × (c/d × e/f)</p>
+            </div>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="card teach-card" data-teach-step="6">
+            <div class="chip">Teach · Step 6 of 9</div>
+            <h3>Role of 0 and 1</h3>
+            <p>
+              0 and 1 play special roles in rational numbers.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>a/b + 0 = a/b (0 is the additive identity).</p>
+              <p>a/b × 1 = a/b (1 is the multiplicative identity).</p>
+              <p>a/b × 0 = 0, but division by 0 is not defined.</p>
+            </div>
+          </div>
+
+          <!-- Step 7 -->
+          <div class="card teach-card" data-teach-step="7">
+            <div class="chip">Teach · Step 7 of 9</div>
+            <h3>Inverse and reciprocal</h3>
+            <p>
+              Every non-zero rational number has an <strong>additive inverse</strong> and a <strong>multiplicative inverse</strong>.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>Additive inverse of a/b is −a/b.</p>
+              <p>Multiplicative inverse (reciprocal) of a/b is b/a, a/b ≠ 0.</p>
+            </div>
+          </div>
+
+          <!-- Step 8 -->
+          <div class="card teach-card" data-teach-step="8">
+            <div class="chip">Teach · Step 8 of 9</div>
+            <h3>Rational numbers on the number line</h3>
+            <p>
+              We can mark rational numbers between integers on the number line by dividing each unit into equal parts.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>To plot 3/4: divide the segment from 0 to 1 into 4 equal parts and take 3 of them.</p>
+              <p>To plot −5/2: go to −2 and move half a unit further left.</p>
+            </div>
+          </div>
+
+          <!-- Step 9 -->
+          <div class="card teach-card" data-teach-step="9">
+            <div class="chip">Teach · Step 9 of 9</div>
+            <h3>Between two rational numbers</h3>
+            <p>
+              Between any two rational numbers, we can always find another rational number.
+            </p>
+            <div class="board">
+              <div class="board-title">On the board</div>
+              <p>Between a and b, we can take (a + b) / 2.</p>
+              <p>Example: Between 1/3 and 1/2, take (1/3 + 1/2) ÷ 2 = 5/12.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Practice ladder screen -->
+        <section class="screen" id="practice">
+          <div class="card">
+            <h2>Practice ladder</h2>
+            <p class="muted">
+              Start from easy questions and move up. The app tracks how many you get right in one go.
+            </p>
+          </div>
+
+          <!-- Easy level -->
+          <div class="card">
+            <div class="chip chip-soft">Level 1 · Easy</div>
+            <h3>Check if these are rational numbers</h3>
+
+            <div class="question-block" data-practice-level="1" data-question-id="1">
+              <p><strong>Q1.</strong> Is −7 an example of a rational number?</p>
+              <div class="options">
+                <button class="option-btn" data-correct="true">Yes</button>
+                <button class="option-btn" data-correct="false">No</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="question-block" data-practice-level="1" data-question-id="2">
+              <p><strong>Q2.</strong> Is √5 a rational number?</p>
+              <div class="options">
+                <button class="option-btn" data-correct="false">Yes</button>
+                <button class="option-btn" data-correct="true">No</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+          <!-- Medium level -->
+          <div class="card">
+            <div class="chip chip-soft">Level 2 · Medium</div>
+            <h3>Simplify and classify</h3>
+
+            <div class="question-block" data-practice-level="2" data-question-id="1">
+              <p><strong>Q3.</strong> Simplify (3/4) + (1/8).</p>
+              <input type="text" class="text-input" placeholder="Your answer, e.g. 7/8" />
+              <button class="btn btn-small" data-action="check-practice-2-1">Check</button>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="question-block" data-practice-level="2" data-question-id="2">
+              <p><strong>Q4.</strong> Is 21/7 an integer, a rational, or both?</p>
+              <input type="text" class="text-input" placeholder="Type: integer / rational / both" />
+              <button class="btn btn-small" data-action="check-practice-2-2">Check</button>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+          <!-- Hard level -->
+          <div class="card">
+            <div class="chip chip-soft">Level 3 · Exam style</div>
+            <h3>Word problems</h3>
+
+            <div class="question-block" data-practice-level="3" data-question-id="1">
+              <p>
+                <strong>Q5.</strong> A tank is 3/4 full. After using 1/3 of the water, what fraction of the full tank is left?
+              </p>
+              <input type="text" class="text-input" placeholder="Your answer, e.g. 1/2" />
+              <button class="btn btn-small" data-action="check-practice-3-1">Check</button>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Practice summary</h3>
+            <p class="muted">
+              Correct answers here help you in the tests. Wrong answers are added to your revision set.
+            </p>
+            <p class="muted small">
+              You can repeat any level as many times as you like.
+            </p>
+          </div>
+        </section>
+        <!-- Tests screen -->
+        <section class="screen" id="tests">
+          <div class="card">
+            <h2>Chapter tests</h2>
+            <p class="muted">
+              Three short tests. Each test has 5 questions. Your scores also update the parent report and revision set.
+            </p>
+          </div>
+
+          <!-- Test 1 -->
+          <div class="card" data-test-id="1">
+            <div class="chip chip-soft">Test 1 · Basics</div>
+            <h3>5 quick questions</h3>
+
+            <div class="question-block" data-test-id="1" data-question-id="1">
+              <p><strong>Q1.</strong> Which of these is not a rational number?</p>
+              <div class="options">
+                <button class="option-btn" data-correct="false">−2</button>
+                <button class="option-btn" data-correct="false">5/9</button>
+                <button class="option-btn" data-correct="true">√7</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="question-block" data-test-id="1" data-question-id="2">
+              <p><strong>Q2.</strong> Write −9 as a rational number.</p>
+              <input type="text" class="text-input" placeholder="Your answer, e.g. -9/1" />
+              <button class="btn btn-small" data-action="check-test-1-2">Check</button>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="question-block" data-test-id="1" data-question-id="3">
+              <p><strong>Q3.</strong> The reciprocal of 5/6 is:</p>
+              <div class="options">
+                <button class="option-btn" data-correct="false">5/6</button>
+                <button class="option-btn" data-correct="true">6/5</button>
+                <button class="option-btn" data-correct="false">−6/5</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="test-footer">
+              <button class="btn btn-secondary" data-action="finish-test" data-test-id="1">
+                Finish Test 1 and show score
+              </button>
+              <div class="test-score" id="testScore1"></div>
+            </div>
+          </div>
+
+          <!-- Test 2 -->
+          <div class="card" data-test-id="2">
+            <div class="chip chip-soft">Test 2 · Operations</div>
+            <h3>5 questions on operations</h3>
+
+            <div class="question-block" data-test-id="2" data-question-id="1">
+              <p><strong>Q1.</strong> Simplify (−3/4) + (1/2).</p>
+              <input type="text" class="text-input" placeholder="Your answer" />
+              <button class="btn btn-small" data-action="check-test-2-1">Check</button>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="question-block" data-test-id="2" data-question-id="2">
+              <p><strong>Q2.</strong> Is addition of rational numbers commutative?</p>
+              <div class="options">
+                <button class="option-btn" data-correct="true">Yes</button>
+                <button class="option-btn" data-correct="false">No</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="test-footer">
+              <button class="btn btn-secondary" data-action="finish-test" data-test-id="2">
+                Finish Test 2 and show score
+              </button>
+              <div class="test-score" id="testScore2"></div>
+            </div>
+          </div>
+
+          <!-- Test 3 -->
+          <div class="card" data-test-id="3">
+            <div class="chip chip-soft">Test 3 · Mixed</div>
+            <h3>5 mixed questions</h3>
+
+            <div class="question-block" data-test-id="3" data-question-id="1">
+              <p>
+                <strong>Q1.</strong> Find a rational number between 1/4 and 1/2.
+              </p>
+              <input type="text" class="text-input" placeholder="Your answer" />
+              <button class="btn btn-small" data-action="check-test-3-1">Check</button>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="question-block" data-test-id="3" data-question-id="2">
+              <p><strong>Q2.</strong> On the number line, which is to the left: −3/2 or −5/4?</p>
+              <div class="options">
+                <button class="option-btn" data-correct="true">−3/2</button>
+                <button class="option-btn" data-correct="false">−5/4</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+
+            <div class="test-footer">
+              <button class="btn btn-secondary" data-action="finish-test" data-test-id="3">
+                Finish Test 3 and show score
+              </button>
+              <div class="test-score" id="testScore3"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Overall test summary</h3>
+            <p class="muted">
+              Your three test scores appear here and in the parent report. Wrong answers are automatically added to your revision set.
+            </p>
+            <p class="muted small" id="testsSummary">
+              Complete at least one test to see your summary.
+            </p>
+          </div>
+        </section>
+
+        <!-- Adaptive revision screen -->
+        <section class="screen" id="adaptive">
+          <div class="card">
+            <h2>Adaptive revision</h2>
+            <p class="muted">
+              This section collects questions you got wrong in practice or tests and lets you try them again.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Your revision set</h3>
+            <p class="muted small" id="revisionEmptyMessage">
+              As you make mistakes in practice and tests, those questions will appear here.
+            </p>
+            <div id="revisionList">
+              <!-- Filled dynamically by JS -->
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Revision progress</h3>
+            <p class="muted small" id="revisionProgress">
+              No revision attempts yet.
+            </p>
+          </div>
+        </section>
+
+        <!-- Parent report screen -->
+        <section class="screen" id="parent-report">
+          <div class="card">
+            <h2>Parent report</h2>
+            <p class="muted">
+              One simple view you can show to a parent. No login, no ads — just this chapter’s progress.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Chapter summary</h3>
+            <ul class="summary-list">
+              <li>
+                Teach steps completed:
+                <span id="parentTeachSummary">0 / 9</span>
+              </li>
+              <li>
+                Practice ladder:
+                <span id="parentPracticeSummary">Not started</span>
+              </li>
+              <li>
+                Tests:
+                <span id="parentTestsSummary">No tests taken yet</span>
+              </li>
+              <li>
+                Revision:
+                <span id="parentRevisionSummary">No revision yet</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Strengths & focus areas</h3>
+            <p class="muted small" id="parentNotes">
+              Once your child finishes practice and tests, this section will show where they are strong and where they need more revision.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>How to use this report</h3>
+            <ol class="simple-list">
+              <li>Ask your child to show you this screen after each study session.</li>
+              <li>Look for green progress and test scores improving over time.</li>
+              <li>Use the Adaptive revision tab to focus only on weak areas.</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Nomad promo screen -->
+        <section class="screen" id="promo">
+          <div class="card">
+            <h2>More from Nomad</h2>
+            <p class="muted">
+              Nomad builds small, focused study apps that feel like a teacher on the board, not a noisy game.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Coming next</h3>
+            <ul class="simple-list">
+              <li>Class 8 Maths – Chapter 2: Linear Equations in One Variable</li>
+              <li>Class 8 Maths – Chapter 3: Understanding Quadrilaterals</li>
+              <li>Class 8 Science – Selected chapters</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Stay connected</h3>
+            <p class="muted small">
+              To get early access to new Nomad chapters, simply save this app link and share it with other parents on WhatsApp.
+            </p>
+          </div>
+        </section>
+
+      </section> <!-- end .screens -->
+    </main> <!-- end .app-main -->
+  </div> <!-- end .app-shell -->
+
+  <script src="script.js"></script>
+</body>
+</html>
