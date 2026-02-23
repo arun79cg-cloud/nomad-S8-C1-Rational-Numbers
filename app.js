@@ -55,7 +55,6 @@ function updateProgress() {
 }
 
 function addRevisionItem(source, questionText) {
-  // Avoid duplicates by text
   if (appState.revisionItems.some((q) => q.text === questionText)) return;
   appState.revisionItems.push({ source, text: questionText });
   renderRevisionList();
@@ -134,7 +133,6 @@ function updateParentReport() {
     revisionEl.textContent = `${appState.revisionItems.length} question(s) in revision set`;
   }
 
-  // Simple note logic
   if (finishedTests === 0) {
     notesEl.textContent =
       "Once tests are completed, this section will highlight strong topics and topics that need more revision.";
@@ -147,20 +145,333 @@ function updateParentReport() {
   }
 }
 
-// ========== EVENT WIRING ==========
+// ========== OPTION BUTTONS & PREVIEW ==========
+
+function setupOptionButtons() {
+  document.querySelectorAll(".option-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest(".question-block");
+      if (!group) return;
+
+      group.querySelectorAll(".option-btn").forEach((b) => {
+        b.classList.remove("selected");
+      });
+      btn.classList.add("selected");
+
+      const isCorrect = btn.getAttribute("data-correct") === "true";
+      const feedback = group.querySelector(".feedback");
+      if (!feedback) return;
+
+      if (isCorrect) {
+        feedback.textContent = "Correct ✅";
+        feedback.classList.add("correct");
+        feedback.classList.remove("incorrect");
+      } else {
+        feedback.textContent = "Not quite. Try again.";
+        feedback.classList.add("incorrect");
+        feedback.classList.remove("correct");
+
+        const qText = group.querySelector("p")?.textContent || "Question";
+        addRevisionItem("practice/test", qText);
+      }
+    });
+  });
+}
+
+function setupPreviewQuestions() {
+  const btn = document.querySelector("[data-action='check-preview-q2']");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    const block = btn.closest(".question-block");
+    if (!block) return;
+    const input = block.querySelector("input");
+    const feedback = block.querySelector(".feedback");
+    if (!input || !feedback) return;
+
+    const value = (input.value || "").trim().replace(/\s+/g, "");
+    if (value === "7/1" || value === "7") {
+      feedback.textContent = "Correct ✅  7 = 7/1, so it is rational.";
+      feedback.classList.add("correct");
+      feedback.classList.remove("incorrect");
+    } else {
+      feedback.textContent = "Not exact. Think: 7 as p/q with q = 1.";
+      feedback.classList.add("incorrect");
+      feedback.classList.remove("correct");
+
+      const qText = block.querySelector("p")?.textContent || "Question";
+      addRevisionItem("preview", qText);
+    }
+  });
+}
+
+// ========== PAYWALL DEMO UNLOCK ==========
+
+function setupPaywallDemo() {
+  const demoBtn = document.getElementById("demoUnlockBtn");
+  if (demoBtn) {
+    demoBtn.addEventListener("click", () => {
+      appState.unlocked = true;
+      demoBtn.textContent = "Full chapter unlocked (demo)";
+      demoBtn.disabled = true;
+
+      const note = document.querySelector("#paywall .note-strip");
+      if (note) {
+        note.textContent =
+          "Demo mode: Full chapter is unlocked for testing. Later, this will unlock only after real payment.";
+      }
+
+      selectScreen("teach-full");
+    });
+  }
+
+  const payBtn = document.getElementById("payNowBtn");
+  if (payBtn) {
+    payBtn.addEventListener("click", () => {
+      alert(
+        "Payment link will be added here. For now, use 'Mark as paid (demo)' to unlock the full chapter."
+      );
+    });
+  }
+}
+
+// ========== PRACTICE CHECKS ==========
+
+function markPracticeAttempt(correct, block) {
+  appState.practiceTotal += 1;
+  if (correct) appState.practiceCorrect += 1;
+
+  if (!correct && block) {
+    const qText = block.querySelector("p")?.textContent || "Practice question";
+    addRevisionItem("practice", qText);
+  }
+
+  updateProgress();
+}
+
+function setupPracticeHandlers() {
+  const p21 = document.querySelector("[data-action='check-practice-2-1']");
+  if (p21) {
+    p21.addEventListener("click", () => {
+      const block = p21.closest(".question-block");
+      const input = block.querySelector("input");
+      const feedback = block.querySelector(".feedback");
+      const val = (input.value || "").trim().replace(/\s+/g, "");
+      const correct = val === "7/8";
+      feedback.textContent = correct
+        ? "Correct ✅  Common denominator 8 → 6/8 + 1/8 = 7/8."
+        : "Check again. Convert both fractions to denominator 8 first.";
+      feedback.classList.toggle("correct", correct);
+      feedback.classList.toggle("incorrect", !correct);
+      markPracticeAttempt(correct, block);
+    });
+  }
+
+  const p22 = document.querySelector("[data-action='check-practice-2-2']");
+  if (p22) {
+    p22.addEventListener("click", () => {
+      const block = p22.closest(".question-block");
+      const input = block.querySelector("input");
+      const feedback = block.querySelector(".feedback");
+      const val = (input.value || "").trim().toLowerCase();
+      const correct =
+        val === "both" || val === "both." || val === "integer and rational";
+      feedback.textContent = correct
+        ? "Correct ✅  21/7 = 3, which is an integer and also a rational number."
+        : "Think: 21/7 = 3. What type of number is 3?";
+      feedback.classList.toggle("correct", correct);
+      feedback.classList.toggle("incorrect", !correct);
+      markPracticeAttempt(correct, block);
+    });
+  }
+
+  const p31 = document.querySelector("[data-action='check-practice-3-1']");
+  if (p31) {
+    p31.addEventListener("click", () => {
+      const block = p31.closest(".question-block");
+      const input = block.querySelector("input");
+      const feedback = block.querySelector(".feedback");
+      const val = (input.value || "").trim().replace(/\s+/g, "");
+      const correct = val === "1/2" || val === "0.5";
+      feedback.textContent = correct
+        ? "Correct ✅  Used 1/3 of 3/4 = 1/4, so left = 3/4 − 1/4 = 1/2."
+        : "Hint: First find 1/3 of 3/4, then subtract from 3/4.";
+      feedback.classList.toggle("correct", correct);
+      feedback.classList.toggle("incorrect", !correct);
+      markPracticeAttempt(correct, block);
+    });
+  }
+}
+// ========== TEST LOGIC ==========
+
+function setupTests() {
+  // Test 1, Q2
+  const t12 = document.querySelector("[data-action='check-test-1-2']");
+  if (t12) {
+    t12.addEventListener("click", () => {
+      const block = t12.closest(".question-block");
+      const input = block.querySelector("input");
+      const feedback = block.querySelector(".feedback");
+      const val = (input.value || "").trim().replace(/\s+/g, "");
+      const correct = val === "-9/1" || val === "-9";
+      feedback.textContent = correct
+        ? "Correct ✅  −9 = −9/1."
+        : "Try again. Think: p/q with q = 1.";
+      feedback.classList.toggle("correct", correct);
+      feedback.classList.toggle("incorrect", !correct);
+      if (!block.dataset.scored) {
+        if (correct) appState.tests[1].correct += 1;
+        else
+          addRevisionItem(
+            "test 1",
+            block.querySelector("p")?.textContent || "Test question"
+          );
+        block.dataset.scored = "true";
+      }
+    });
+  }
+
+  // Test 2, Q1
+  const t21 = document.querySelector("[data-action='check-test-2-1']");
+  if (t21) {
+    t21.addEventListener("click", () => {
+      const block = t21.closest(".question-block");
+      const input = block.querySelector("input");
+      const feedback = block.querySelector(".feedback");
+      const val = (input.value || "").trim().replace(/\s+/g, "");
+      const correct = val === "-1/4";
+      feedback.textContent = correct
+        ? "Correct ✅  Common denominator 4 → −3/4 + 2/4 = −1/4."
+        : "Check again. Make denominators equal to 4.";
+      feedback.classList.toggle("correct", correct);
+      feedback.classList.toggle("incorrect", !correct);
+      if (!block.dataset.scored) {
+        if (correct) appState.tests[2].correct += 1;
+        else
+          addRevisionItem(
+            "test 2",
+            block.querySelector("p")?.textContent || "Test question"
+          );
+        block.dataset.scored = "true";
+      }
+    });
+  }
+
+  // Test 3, Q1
+  const t31 = document.querySelector("[data-action='check-test-3-1']");
+  if (t31) {
+    t31.addEventListener("click", () => {
+      const block = t31.closest(".question-block");
+      const input = block.querySelector("input");
+      const feedback = block.querySelector(".feedback");
+      const val = (input.value || "").trim().replace(/\s+/g, "");
+      const correct = val === "3/8";
+      feedback.textContent = correct
+        ? "Correct ✅  Midpoint: (1/4 + 1/2) ÷ 2 = 3/8."
+        : "Hint: Take the average of 1/4 and 1/2.";
+      feedback.classList.toggle("correct", correct);
+      feedback.classList.toggle("incorrect", !correct);
+      if (!block.dataset.scored) {
+        if (correct) appState.tests[3].correct += 1;
+        else
+          addRevisionItem(
+            "test 3",
+            block.querySelector("p")?.textContent || "Test question"
+          );
+        block.dataset.scored = "true";
+      }
+    });
+  }
+
+  // Finish test buttons
+  document.querySelectorAll("[data-action='finish-test']").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const testId = btn.getAttribute("data-test-id");
+      const testState = appState.tests[testId];
+      if (!testState) return;
+
+      const blocks = document.querySelectorAll(
+        `.question-block[data-test-id="${testId}"]`
+      );
+      blocks.forEach((block) => {
+        const selected = block.querySelector(".option-btn.selected");
+        if (selected && selected.getAttribute("data-correct") === "true") {
+          if (!block.dataset.scored) {
+            testState.correct += 1;
+            block.dataset.scored = "true";
+          }
+        } else if (!block.dataset.scored) {
+          const qText = block.querySelector("p")?.textContent || "Test question";
+          addRevisionItem(`test ${testId}`, qText);
+          block.dataset.scored = "true";
+        }
+      });
+
+      testState.finished = true;
+
+      const scoreEl = document.getElementById(`testScore${testId}`);
+      if (scoreEl) {
+        scoreEl.textContent = `Score: ${testState.correct}/${testState.total}`;
+      }
+
+      updateTestsSummary();
+      updateProgress();
+    });
+  });
+}
+
+function updateTestsSummary() {
+  const summary = document.getElementById("testsSummary");
+  if (!summary) return;
+
+  const parts = [];
+  Object.entries(appState.tests).forEach(([id, t]) => {
+    if (t.finished) {
+      parts.push(`Test ${id}: ${t.correct}/${t.total}`);
+    }
+  });
+
+  if (parts.length === 0) {
+    summary.textContent = "Complete at least one test to see your summary.";
+  } else {
+    summary.textContent = parts.join(" · ");
+  }
+}
+
+// ========== TEACH COMPLETION (SIMPLE) ==========
+
+function setupTeachCompletion() {
+  const teachScreen = document.getElementById("teach-full");
+  if (!teachScreen) return;
+
+  let marked = false;
+
+  const observer = new MutationObserver(() => {
+    const isActive = teachScreen.classList.contains("active");
+    if (isActive && !marked) {
+      appState.teachCompleted = 9;
+      marked = true;
+      updateProgress();
+    }
+  });
+
+  observer.observe(teachScreen, {
+    attributes: true,
+    attributeFilter: ["class"]
+  });
+}
+
+// ========== DOM READY ==========
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Default screen
   selectScreen("landing");
   updateProgress();
   renderRevisionList();
 
-  // Tab click navigation
+  // Navigation
   document.querySelectorAll("[data-screen-target]").forEach((el) => {
     el.addEventListener("click", () => {
       const target = el.getAttribute("data-screen-target");
-
-      // If locked and user jumps ahead to full content, practice, tests, adaptive
       const lockedScreens = ["teach-full", "practice", "tests", "adaptive"];
       if (!appState.unlocked && lockedScreens.includes(target)) {
         selectScreen("paywall");
@@ -170,7 +481,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Parent button explicitly goes to parent report
   const parentBtn = document.querySelector(".parent-mode-btn");
   if (parentBtn) {
     parentBtn.addEventListener("click", () => {
@@ -178,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Hook all behaviour
+  // Behaviour hooks
   setupOptionButtons();
   setupPreviewQuestions();
   setupPaywallDemo();
